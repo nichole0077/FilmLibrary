@@ -79,7 +79,7 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_movies[id-1]);
         }
 
         // POST: Movie/Delete/5
@@ -88,7 +88,7 @@ namespace FilmLibrary.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                _movies.RemoveAt(id - 1);
 
                 return RedirectToAction("Index");
             }
