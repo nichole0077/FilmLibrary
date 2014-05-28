@@ -55,7 +55,7 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_movies[id-1]);
         }
 
         // POST: Movie/Edit/5
@@ -64,7 +64,9 @@ namespace FilmLibrary.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                var movie = _movies[id - 1];
+                movie.Title = collection["Title"];
+                movie.Genre = collection["Genre"];
 
                 return RedirectToAction("Index");
             }
