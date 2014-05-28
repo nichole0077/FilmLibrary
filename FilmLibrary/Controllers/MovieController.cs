@@ -20,7 +20,7 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(_movies[id-1]);
         }
 
         // GET: Movie/Create
