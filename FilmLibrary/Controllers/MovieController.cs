@@ -1,6 +1,7 @@
 ﻿using FilmLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,6 +42,15 @@ namespace FilmLibrary.Controllers
                     Title = collection["Title"],
                     Genre = collection["Genre"]
                 };
+
+                using (var conn = new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=App_Data\\FilmLibrary.mdf;Integrated Security=True;User Instance=True;"))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("Insert into movies (Title, Genre) Values ('Ghost Busters', 'Sci-Fi');");
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                
 
                 _movies.Add(movie);
 
