@@ -146,7 +146,6 @@ namespace FilmLibrary.Controllers
                     }
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("Update Movies set Title='" + movie.Title + "', Genre='" + movie.Genre + "' where id ='" + id + "'");
-                
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
 
@@ -157,18 +156,6 @@ namespace FilmLibrary.Controllers
                     return View();
                 }
             }
-            //try
-            //{
-            //    var movie = _movies[id - 1];
-            //    movie.Title = collection["Title"];
-            //    movie.Genre = collection["Genre"];
-
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
 
         // GET: Movie/Delete/5
