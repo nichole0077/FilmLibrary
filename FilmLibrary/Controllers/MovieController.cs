@@ -48,7 +48,23 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Details/5
         public ActionResult Details(int id)
         {
-            return View(_movies[id-1]);
+            var movie = new Movie();
+            using( var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("Select id, title, genre from movies where id='" + id +"'");
+                cmd.Connection = conn;
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    movie.Id = id;
+                    movie.Title = (string)reader.GetString(1);
+                    movie.Genre = (string)reader.GetString(2);
+                }
+                
+            }
+            return View(movie);
         }
 
         // GET: Movie/Create
@@ -77,7 +93,7 @@ namespace FilmLibrary.Controllers
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
                 }
-                
+
 
                 _movies.Add(movie);
 
@@ -92,7 +108,7 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_movies[id-1]);
+            return View(_movies[id - 1]);
         }
 
         // POST: Movie/Edit/5
@@ -116,7 +132,7 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Delete/5
         public ActionResult Delete(int id)
         {
-            return View(_movies[id-1]);
+            return View(_movies[id - 1]);
         }
 
         // POST: Movie/Delete/5
