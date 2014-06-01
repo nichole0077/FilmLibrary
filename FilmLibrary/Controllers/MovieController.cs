@@ -108,25 +108,67 @@ namespace FilmLibrary.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_movies[id - 1]);
+            var movie = new Movie();
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("Select Title, Genre from Movies where id ='" + id + "'");
+                cmd.Connection = conn;
+                var reader = cmd.ExecuteReader(); 
+
+                while (reader.Read())
+                {
+                    movie.Id = id;
+                    movie.Title = reader.GetString(0);
+                    movie.Genre = reader.GetString(1);
+                }
+            }
+            return View(movie);
         }
 
         // POST: Movie/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
-            {
-                var movie = _movies[id - 1];
-                movie.Title = collection["Title"];
-                movie.Genre = collection["Genre"];
+            var movie = new Movie();
 
-                return RedirectToAction("Index");
-            }
-            catch
+            using (var conn = new SqlConnection(ConnectionString))
             {
-                return View();
+                
+                
+                try
+                {
+                    movie = new Movie();
+                    {
+                        movie.Id = id;
+                        movie.Title = collection["Title"];
+                        movie.Genre = collection["Genre"];
+                    }
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("Update Movies set Title='" + movie.Title + "', Genre='" + movie.Genre + "' where id ='" + id + "'");
+                
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View();
+                }
             }
+            //try
+            //{
+            //    var movie = _movies[id - 1];
+            //    movie.Title = collection["Title"];
+            //    movie.Genre = collection["Genre"];
+
+            //    return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         // GET: Movie/Delete/5
