@@ -1,6 +1,7 @@
 ﻿using FilmLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -11,11 +12,37 @@ namespace FilmLibrary.Controllers
     public class MovieController : Controller
     {
         static List<Movie> _movies = new List<Movie>();
+        private readonly string ConnectionString;
+
+        public MovieController()
+        {
+            ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        }
 
         // GET: Movie
         public ActionResult Index()
         {
-            return View(_movies);
+            var movies = new List<Movie>();
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("select id, title, genre from movies");
+                cmd.Connection = conn;
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    movies.Add(
+                        new Movie
+                        {
+                            Id = (int)reader["id"],
+                            Title = (string)reader["title"],
+                            Genre = (string)reader["genre"]
+                        }
+                    );
+                }
+            }
+            return View(movies);
         }
 
         // GET: Movie/Details/5
@@ -43,10 +70,10 @@ namespace FilmLibrary.Controllers
                     Genre = collection["Genre"]
                 };
 
-                using (var conn = new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=App_Data\\FilmLibrary.mdf;Integrated Security=True;User Instance=True;"))
+                using (var conn = new SqlConnection(ConnectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("Insert into movies (Title, Genre) Values ('Ghost Busters', 'Sci-Fi');");
+                    SqlCommand cmd = new SqlCommand("Insert into movies (Title, Genre) Values ('" + movie.Title + "','" + movie.Genre + "');");
                     cmd.Connection = conn;
                     cmd.ExecuteNonQuery();
                 }
