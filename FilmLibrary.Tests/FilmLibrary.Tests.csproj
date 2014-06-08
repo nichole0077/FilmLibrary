@@ -82,16 +82,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MovieControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="FilmLibrary.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FilmLibrary_log.ldf">
+      <DependentUpon>FilmLibrary.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FilmLibraryDomain\FilmLibraryDomain.csproj">
+      <Project>{d913784d-074c-4915-b602-bf954921f4c7}</Project>
+      <Name>FilmLibraryDomain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FilmLibrary\FilmLibrary.csproj">
       <Project>{284F328A-2C36-45AF-ADFD-EA5AA516DDE7}</Project>
       <Name>FilmLibrary</Name>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary", "FilmLibrary\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibrary.Tests", "FilmLibrary.Tests\FilmLibrary.Tests.csproj", "{67B3873B-2BE6-4A54-BF55-5EFF1557F0B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmLibraryDomain", "FilmLibraryDomain\FilmLibraryDomain.csproj", "{D913784D-074C-4915-B602-BF954921F4C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{67B3873B-2BE6-4A54-BF55-5EFF1557F0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67B3873B-2BE6-4A54-BF55-5EFF1557F0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67B3873B-2BE6-4A54-BF55-5EFF1557F0B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D913784D-074C-4915-B602-BF954921F4C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D913784D-074C-4915-B602-BF954921F4C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D913784D-074C-4915-B602-BF954921F4C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D913784D-074C-4915-B602-BF954921F4C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

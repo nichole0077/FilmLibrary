@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FilmLibraryDomain;
 
 namespace FilmLibrary.Controllers
 {
@@ -22,48 +23,16 @@ namespace FilmLibrary.Controllers
         // GET: Movie
         public ActionResult Index()
         {
-            var movies = new List<Movie>();
-            using (var conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("select id, title, genre from movies");
-                cmd.Connection = conn;
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-
-                    movies.Add(
-                        new Movie
-                        {
-                            Id = (int)reader["id"],
-                            Title = (string)reader["title"],
-                            Genre = (string)reader["genre"]
-                        }
-                    );
-                }
-            }
+            var repo = new MovieRepository();
+            var movies = repo.ReadAllMovies();
             return View(movies);
         }
 
         // GET: Movie/Details/5
         public ActionResult Details(int id)
         {
-            var movie = new Movie();
-            using( var conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("Select id, title, genre from movies where id='" + id +"'");
-                cmd.Connection = conn;
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    movie.Id = id;
-                    movie.Title = (string)reader.GetString(1);
-                    movie.Genre = (string)reader.GetString(2);
-                }
-                
-            }
+            var repo = new MovieRepository();
+            var movie = repo.ReturnDetails(id);
             return View(movie);
         }
 
@@ -179,5 +148,6 @@ namespace FilmLibrary.Controllers
                 return View();
             }
         }
+
     }
 }
